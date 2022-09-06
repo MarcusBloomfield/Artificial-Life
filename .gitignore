@@ -36,7 +36,6 @@ ExportedObj/
 */Temp
 */obj
 */Library
-*/Packages
 *.csproj
 *.unityproj
 *.sln
