@@ -37,14 +37,14 @@ public class CellFunctions : MonoBehaviour
     {
         for (int i = 0; i < typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(i));
+            relationShips.Add(SetRelationShip(i, Random.Range(50, 100f) * 2));
         }
         for (int i = 0; i < relationShipAmount - typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(Random.Range(0, all.Count)));
+            relationShips.Add(SetRelationShip(Random.Range(0, all.Count), Random.Range(-100f, 100f) * 2));
         }
     }
-    private void FixedUpdate()
+    private void Update()
     {
         ProcessRelationShips();
     }
@@ -67,9 +67,9 @@ public class CellFunctions : MonoBehaviour
         }
         return items;
     }
-    Vector4 SetRelationShip(float x)
+    Vector4 SetRelationShip(float x, float z)
     {
-        return new Vector4(x, Random.Range(0, all.Count), Random.Range(-10f, 10f), Random.Range(30f, 100f));
+        return new Vector4(x, Random.Range(0, all.Count), z, Random.Range(30f, 100f));
     }
     void interprateRelationShip(Vector4 vector4)
     {
@@ -77,18 +77,14 @@ public class CellFunctions : MonoBehaviour
     }
     void Simulate(Rigidbody[] first, Rigidbody[] second, float force, float effectRange)
     {
-        if (force != 0)
+        for (int i = 0; i < first.Length; i++)
         {
-            for (int i = 0; i < first.Length; i++)
+            Vector3 targetPosition = second[Random.Range(0, second.Length)].transform.position;
+            float distance = Vector3.Distance(first[i].transform.position, targetPosition);
+            if (distance > 0 && distance < effectRange)
             {
-                Vector3 targetPosition = second[Random.Range(0, second.Length)].transform.position;
-                float distance = Vector3.Distance(first[i].transform.position, targetPosition);
-                float a = force / distance;
-                if (distance > 0 && distance < effectRange)
-                {
-                    first[i].transform.LookAt(targetPosition);
-                    first[i].velocity += first[i].transform.forward * a;
-                }
+                first[i].transform.LookAt(targetPosition);
+                first[i].velocity += first[i].transform.forward * force / distance;
             }
         }
     }
