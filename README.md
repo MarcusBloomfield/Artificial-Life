@@ -15,9 +15,9 @@ Additionally, the lack of constraints has the effect of making the structures mo
 ![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life1.PNG?raw=true)
 
 ## Controls
-R to randomize.
-WASD to move around.
-C to move down.
+R to randomize. <br />
+WASD to move around. <br />
+C to move down. <br />
 Space to move up.
 
 ![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life2.PNG?raw=true)
