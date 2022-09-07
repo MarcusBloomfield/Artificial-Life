@@ -14,6 +14,12 @@ Additionally, the lack of constraints has the effect of making the structures mo
 
 ![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life1.PNG?raw=true)
 
+## Controls
+R to randomize.
+WASD to move around.
+C to move down.
+Space to move up.
+
 ![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life2.PNG?raw=true)
 
 ## This project was inspired by these particle projects.
