@@ -24,7 +24,6 @@ public class CellFunctions : MonoBehaviour
     {
         GenerateCells();
         GenerateRelationShips();
-        InvokeRepeating("ProcessRelationShips", 1, .1f);
     }
     void GenerateCells()
     {
@@ -45,24 +44,33 @@ public class CellFunctions : MonoBehaviour
     {
         for (int i = 0; i < typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(i, Random.Range(50, 100f) * 2));
+            relationShips.Add(SetRelationShip(i, Random.Range(50, 100f) * 4));
         }
         for (int i = 0; i < relationShipAmount - typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(Random.Range(0, all.Count), Random.Range(-100f, 100f) * 2));
+            relationShips.Add(SetRelationShip(Random.Range(0, all.Count), Random.Range(-100f, 100f) * 4));
         }
     }
     private void Update()
     {
-        for (int i = 0; i < cells.Count; i++)
-        {
-            cells[i].Move();
-        }
+        ProcessRelationShips();
         timer += 1 * Time.deltaTime;
 
         if(timer > 60)
         {
             Application.LoadLevel(Application.loadedLevel);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Time.timeScale = 1;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < cells.Count; i++)
+        {
+            cells[i].Move();
         }
     }
     bool cunt = false;
