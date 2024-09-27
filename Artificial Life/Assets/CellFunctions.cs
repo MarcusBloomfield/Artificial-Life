@@ -15,6 +15,7 @@ public class CellFunctions : MonoBehaviour
     [SerializeField] int typeAmount = 4;
     [SerializeField] int cellsPerType = 100;
 
+    float timer = 0;
     private void Start()
     {
         GenerateCells();
@@ -47,6 +48,16 @@ public class CellFunctions : MonoBehaviour
     private void Update()
     {
         ProcessRelationShips();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Time.timeScale = 1;
+            Application.LoadLevel(Application.loadedLevel);
+        }
+        timer += 1 * Time.deltaTime;
+        if (timer > 60)
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
     void ProcessRelationShips()
     {
