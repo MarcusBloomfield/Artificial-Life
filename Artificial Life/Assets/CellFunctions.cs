@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using TMPro;
 
 public class CellFunctions : MonoBehaviour
 {
     [SerializeField] GameObject sphere;
 
-    List<Rigidbody[]> all = new List<Rigidbody[]>();
+    List<Cell[]> all = new List<Cell[]>();
 
     [SerializeField] float bounds;
 
@@ -15,20 +17,26 @@ public class CellFunctions : MonoBehaviour
     [SerializeField] int typeAmount = 4;
     [SerializeField] int cellsPerType = 100;
 
+    List<Cell> cells = new List<Cell>();
+    float timer  = 0;
+
     private void Start()
     {
         GenerateCells();
         GenerateRelationShips();
+        InvokeRepeating("ProcessRelationShips", 1, .1f);
     }
     void GenerateCells()
     {
         for (int i = 0; i < typeAmount; i++)
         {
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
-            Rigidbody[] cells = Spawn(sphere, cellsPerType);
+            Cell[] cells = Spawn(sphere, cellsPerType);
             for (int k = 0; k < cells.Length; k++)
             {
                 cells[k].GetComponent<MeshRenderer>().materials[0].color = color;
+                cells[k].GetComponent<MeshRenderer>().materials[0].EnableKeyword("_EMISSION");
+                cells[k].GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * 2);
             }
             all.Add(cells);
         }
@@ -46,24 +54,48 @@ public class CellFunctions : MonoBehaviour
     }
     private void Update()
     {
-        ProcessRelationShips();
-    }
-    void ProcessRelationShips()
-    {
-        for (int i = 0; i < relationShips.Count; i++)
+        for (int i = 0; i < cells.Count; i++)
         {
-            interprateRelationShip(relationShips[i]);
+            cells[i].Move();
+        }
+        timer += 1 * Time.deltaTime;
+
+        if(timer > 60)
+        {
+            Application.LoadLevel(Application.loadedLevel);
         }
     }
-    Rigidbody[] Spawn(GameObject type, int amount)
+    bool cunt = false;
+    void ProcessRelationShips()
     {
-        Rigidbody[] items = new Rigidbody[amount];
+        if (cunt== false)
+        {
+            for (int i = 0; i < relationShips.Count / 2; i++)
+            {
+                Simulate(all[(int)relationShips[i].x], all[(int)relationShips[i].y], relationShips[i].z, relationShips[i].w);
+            }
+            cunt = true;
+        }
+        else
+        {
+            for (int i = relationShips.Count / 2; i < relationShips.Count; i++)
+            {
+                Simulate(all[(int)relationShips[i].x], all[(int)relationShips[i].y], relationShips[i].z, relationShips[i].w);
+            }
+            cunt = false;
+        }
+    }
+    Cell[] Spawn(GameObject type, int amount)
+    {
+        Cell[] items = new Cell[amount];
         float size = Random.Range(1f, 5f);
         Vector3 scale = new Vector3(size, size, size);
         for (int i = 0; i < amount; i++)
         {
-            items[i] = Instantiate(type, new Vector3(Random.Range(-bounds, bounds), Random.Range(-bounds, bounds), Random.Range(-bounds, bounds)), Quaternion.identity).GetComponent<Rigidbody>();
+            items[i] = Instantiate(type, new Vector3(Random.Range(-bounds, bounds), Random.Range(-bounds, bounds), Random.Range(-bounds, bounds)), Quaternion.identity).GetComponent<Cell>();
+            items[i].body = items[i].GetComponent<Rigidbody>();
             items[i].transform.localScale = scale;
+            cells.Add(items[i]);
         }
         return items;
     }
@@ -71,21 +103,16 @@ public class CellFunctions : MonoBehaviour
     {
         return new Vector4(x, Random.Range(0, all.Count), z, Random.Range(30f, 100f));
     }
-    void interprateRelationShip(Vector4 vector4)
-    {
-        Simulate(all[(int)vector4.x], all[(int)vector4.y], vector4.z, vector4.w);
-    }
-    void Simulate(Rigidbody[] first, Rigidbody[] second, float force, float effectRange)
+    void Simulate(Cell[] first, Cell[] second, float force, float effectRange)
     {
         for (int i = 0; i < first.Length; i++)
         {
-            Vector3 targetPosition = second[Random.Range(0, second.Length)].transform.position;
-            float distance = Vector3.Distance(first[i].transform.position, targetPosition);
-            if (distance > 0 && distance < effectRange)
-            {
-                first[i].transform.LookAt(targetPosition);
-                first[i].velocity += first[i].transform.forward * force / distance;
-            }
+
+            first[i].target = second[Random.Range(0, second.Length)];
+            float distance = Vector3.Distance(first[i].transform.position, first[i].target.transform.position);
+            first[i].force = force / distance;
+            first[i].effectRange = effectRange;
+            first[i].distance = distance;
         }
     }
 }
