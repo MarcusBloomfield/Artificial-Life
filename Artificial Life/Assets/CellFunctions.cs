@@ -31,7 +31,8 @@ public class CellFunctions : MonoBehaviour
             {
                 cells[k].GetComponent<MeshRenderer>().materials[0].color = color;
                 cells[k].GetComponent<MeshRenderer>().materials[0].EnableKeyword("_EMISSION");
-                cells[k].GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * 2);
+                cells[k].GetComponent<MeshRenderer>().materials[0].SetColor("_EmissiveColor", color * 2);
+                cells[k].GetComponent<MeshRenderer>().materials[0].SetInt("_EmissiveIntensityUnit", 2);
             }
             all.Add(cells);
         }
