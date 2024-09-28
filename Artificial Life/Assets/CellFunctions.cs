@@ -30,6 +30,8 @@ public class CellFunctions : MonoBehaviour
             for (int k = 0; k < cells.Length; k++)
             {
                 cells[k].GetComponent<MeshRenderer>().materials[0].color = color;
+                cells[k].GetComponent<MeshRenderer>().materials[0].EnableKeyword("_EMISSION");
+                cells[k].GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color * 2);
             }
             all.Add(cells);
         }
@@ -59,11 +61,24 @@ public class CellFunctions : MonoBehaviour
             Application.LoadLevel(Application.loadedLevel);
         }
     }
+    bool cycle = true;
     void ProcessRelationShips()
     {
-        for (int i = 0; i < relationShips.Count; i++)
+        if (cycle)
         {
-            interprateRelationShip(relationShips[i]);
+            for (int i = 0; i < relationShips.Count / 2; i++)
+            {
+                interprateRelationShip(relationShips[i]);
+            }
+            cycle = false;
+        }
+        else
+        {
+            for (int i = relationShips.Count / 2; i < relationShips.Count; i++)
+            {
+                interprateRelationShip(relationShips[i]);
+            }
+            cycle = true;
         }
     }
     Rigidbody[] Spawn(GameObject type, int amount)
