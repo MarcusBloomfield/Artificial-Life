@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 6815242314349779269, guid: 54745d3b87cf0d54c8c2dcf2ea881ccd, type: 3}
-  bounds: 100
+  bounds: 150
   relationShipAmount: 64
   typeAmount: 8
-  cellsPerType: 600
+  cellsPerType: 500
 --- !u!4 &766267186
 Transform:
   m_ObjectHideFlags: 0

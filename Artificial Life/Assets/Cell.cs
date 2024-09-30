@@ -14,9 +14,9 @@ public class Cell : MonoBehaviour
     }
     void CheckDistance()
     {
-        if (Vector3.Distance(gameObject.transform.position, Vector3.zero) > bounds + 100)
+        if (Vector3.Distance(gameObject.transform.position, Vector3.zero) > bounds * 2)
         {
-            gameObject.transform.position = -gameObject.transform.position;
+            gameObject.transform.position = new Vector3(Random.Range(-bounds / 2, bounds / 2), Random.Range(-bounds / 2, bounds / 2), Random.Range(-bounds / 2, bounds / 2));
         }
     }
     void CullStatic()
@@ -26,7 +26,7 @@ public class Cell : MonoBehaviour
             if (Vector3.Distance(lastPosition, gameObject.transform.position) < .1)
             {
                 mRenderer.enabled = false;
-                if (Vector3.Distance(gameObject.transform.position, Vector3.zero) > bounds + 100)
+                if (Vector3.Distance(gameObject.transform.position, Vector3.zero) > bounds * 2)
                 {
                     gameObject.transform.position = new Vector3(Random.Range(-bounds / 2, bounds / 2), Random.Range(-bounds / 2, bounds / 2), Random.Range(-bounds / 2, bounds / 2));
                 }

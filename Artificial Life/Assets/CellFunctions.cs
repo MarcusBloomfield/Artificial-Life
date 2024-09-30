@@ -41,11 +41,11 @@ public class CellFunctions : MonoBehaviour
     {
         for (int i = 0; i < typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(i, Random.Range(50, 100f) * 2));
+            relationShips.Add(SetRelationShip(i, Random.Range(50, 100f) * 4));
         }
         for (int i = 0; i < relationShipAmount - typeAmount; i++)
         {
-            relationShips.Add(SetRelationShip(Random.Range(0, all.Count), Random.Range(-100f, 100f) * 2));
+            relationShips.Add(SetRelationShip(Random.Range(0, all.Count), Random.Range(-100f, 100f) * 4));
         }
     }
     private void Update()
