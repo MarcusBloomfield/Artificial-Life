@@ -1,5 +1,15 @@
 # Artificial-Life
-A Simple simulation of the simple life.
+A Simple simulation of the simple life.              
+
+WebBuild: https://marcusbloomfield.github.io/Artificial-Life/
+
+## Controls
+R to randomize. <br />
+WASD to move around. <br />
+C to move down. <br />
+Space to move up.
+
+![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life2.PNG?raw=true)
 
 ## Description
 This is a simple simulation of primitive attraction relationships between spheres I made in unity using c# for fun. 
@@ -13,14 +23,6 @@ The particle beings seem more unstable due to the lack of constraints on the thi
 Additionally, the lack of constraints has the effect of making the structures mostly spheres with layers.
 
 ![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life1.PNG?raw=true)
-
-## Controls
-R to randomize. <br />
-WASD to move around. <br />
-C to move down. <br />
-Space to move up.
-
-![alt text](https://github.com/MarcusBloomfield/Artificial-Life/blob/main/Life2.PNG?raw=true)
 
 ## This project was inspired by these particle projects.
 https://www.ventrella.com/Clusters/
