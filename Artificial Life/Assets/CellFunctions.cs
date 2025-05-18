@@ -84,7 +84,7 @@ public class CellFunctions : MonoBehaviour
             if (distance > 0 && distance < effectRange)
             {
                 first[i].transform.LookAt(targetPosition);
-                first[i].velocity += first[i].transform.forward * force / distance;
+                first[i].linearVelocity += first[i].transform.forward * force / distance;
             }
         }
     }
